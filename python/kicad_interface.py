@@ -170,6 +170,7 @@ try:
     from commands.connection_schematic import ConnectionManager
     from commands.library_schematic import LibraryManager as SchematicLibraryManager
     from commands.library import LibraryManager as FootprintLibraryManager, LibraryCommands
+    from commands.schematic_dsl import SchematicDSLManager
     logger.info("Successfully imported all command handlers")
 except ImportError as e:
     logger.error(f"Failed to import command handlers: {e}")
@@ -274,6 +275,11 @@ class KiCADInterface:
             "add_schematic_wire": self._handle_add_schematic_wire,
             "list_schematic_libraries": self._handle_list_schematic_libraries,
             "export_schematic_pdf": self._handle_export_schematic_pdf,
+
+            # Schematic DSL commands
+            "get_schematic_index": SchematicDSLManager.get_schematic_index,
+            "get_schematic_page": SchematicDSLManager.get_schematic_page,
+            "get_schematic_context": SchematicDSLManager.get_schematic_context,
 
             # UI/Process management commands
             "check_kicad_ui": self._handle_check_kicad_ui,

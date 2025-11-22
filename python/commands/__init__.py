@@ -8,6 +8,7 @@ from .component import ComponentCommands
 from .routing import RoutingCommands
 from .design_rules import DesignRuleCommands
 from .export import ExportCommands
+from .schematic_dsl import SchematicDSLManager
 
 __all__ = [
     'ProjectCommands',
@@ -15,5 +16,6 @@ __all__ = [
     'ComponentCommands',
     'RoutingCommands',
     'DesignRuleCommands',
-    'ExportCommands'
+    'ExportCommands',
+    'SchematicDSLManager'
 ]

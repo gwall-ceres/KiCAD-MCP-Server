@@ -1,6 +1,6 @@
 /**
  * Tools index for KiCAD MCP server
- * 
+ *
  * Exports all tool registration functions
  */
 
@@ -11,3 +11,4 @@ export { registerRoutingTools } from './routing.js';
 export { registerDesignRuleTools } from './design-rules.js';
 export { registerExportTools } from './export.js';
 export { registerSchematicTools } from './schematic.js';
+export { registerSchematicDSLTools } from './schematic-dsl.js';

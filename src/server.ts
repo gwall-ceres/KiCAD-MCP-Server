@@ -18,6 +18,7 @@ import { registerRoutingTools } from './tools/routing.js';
 import { registerDesignRuleTools } from './tools/design-rules.js';
 import { registerExportTools } from './tools/export.js';
 import { registerUITools } from './tools/ui.js';
+import { registerSchematicDSLTools } from './tools/schematic-dsl.js';
 
 // Import resource registration functions
 import { registerProjectResources } from './resources/project.js';
@@ -128,6 +129,7 @@ export class KiCADMcpServer {
     registerDesignRuleTools(this.server, this.callKicadScript.bind(this));
     registerExportTools(this.server, this.callKicadScript.bind(this));
     registerUITools(this.server, this.callKicadScript.bind(this));
+    registerSchematicDSLTools(this.server, this.callKicadScript.bind(this));
     
     // Register all resources
     registerProjectResources(this.server, this.callKicadScript.bind(this));
