@@ -28,6 +28,7 @@ Example Usage:
 from .models import Pin, Component, Net
 from .interfaces import SchematicProvider
 from .dsl_emitter import emit_page_dsl, emit_context_dsl
+from .librarian import Librarian
 
 __all__ = [
     'Pin',
@@ -36,6 +37,7 @@ __all__ = [
     'SchematicProvider',
     'emit_page_dsl',
     'emit_context_dsl',
+    'Librarian',
 ]
 
 __version__ = '0.3.0'

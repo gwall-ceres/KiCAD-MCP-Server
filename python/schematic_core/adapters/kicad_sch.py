@@ -9,9 +9,14 @@ Component/Pin/Net model used by the schematic core library.
 """
 from typing import List, Dict, Any, Set, Optional
 from pathlib import Path
+import sys
+import os
 
-from kicad_mcp.utils.netlist_parser import SchematicParser
-from kicad_mcp.utils.pcb_netlist_parser import PCBNetlistParser
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+
+from utils.netlist_parser import SchematicParser
+from utils.pcb_netlist_parser import PCBNetlistParser
 from ..interfaces import SchematicProvider
 from ..models import Component, Pin, Net
 
