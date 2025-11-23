@@ -14,9 +14,12 @@ Successfully migrated Schematic DSL functionality from `kicad-mcp` to `KiCAD-MCP
 **Python (Backend)**:
 - `python/schematic_core/` - Complete DSL core library (models, emitter, librarian)
 - `python/utils/pcb_netlist_parser.py` - PCB netlist parser with proper S-expression handling
+- `python/utils/netlist_parser.py` - Schematic netlist parser with hierarchical sheet support
 - `python/commands/schematic_dsl.py` - Command handlers wrapping DSL functionality
 - `python/commands/__init__.py` - Added SchematicDSLManager export
 - `python/kicad_interface.py` - Added import and command routing
+- `python/schematic_core/__init__.py` - Export Librarian for easier imports
+- `python/schematic_core/adapters/kicad_sch.py` - Fixed import paths for KiCAD-MCP-Server structure
 
 **TypeScript (Frontend)**:
 - `src/tools/schematic-dsl.ts` - TypeScript tool wrappers for MCP
@@ -100,8 +103,23 @@ Expected output:
 - battery_charger page: 108 components, 37 nets
 - All transistors show 3 pins (D, G, S) correctly
 
+## Post-Migration Fixes
+
+After initial migration, several import path issues were identified and resolved:
+
+1. **Missing netlist_parser.py**: Added schematic netlist parser from kicad-mcp
+2. **Import path corrections**: Updated `kicad_sch.py` to use correct import paths for KiCAD-MCP-Server structure
+3. **Export Librarian**: Added Librarian to `schematic_core/__init__.py` exports
+4. **Verified imports**: All Python modules now import correctly without ModuleNotFoundError
+
+These fixes ensure the entire schematic DSL system works correctly in the migrated architecture.
+
 ## Migration Date
 2025-01-22
+
+## Commits
+- `1056256` - Initial migration with all core files
+- `e712fe0` - Import path fixes and missing dependencies
 
 ## Source
 Migrated from: `kicad-mcp` (FastMCP pure-Python implementation)
