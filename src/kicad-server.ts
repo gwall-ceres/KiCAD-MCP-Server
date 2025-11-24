@@ -500,27 +500,9 @@ class KiCADServer {
               this.pythonProcess.stdout.removeAllListeners('data');
             }
             
-            // Resolve with the expected MCP tool response format
-            if (result.success) {
-              resolve({
-                content: [
-                  {
-                    type: 'text',
-                    text: JSON.stringify(result, null, 2)
-                  }
-                ]
-              });
-            } else {
-              resolve({
-                content: [
-                  {
-                    type: 'text',
-                    text: result.errorDetails || result.message || 'Unknown error'
-                  }
-                ],
-                isError: true
-              });
-            }
+            // Return the raw Python result object
+            // Individual tool handlers will format their own MCP responses
+            resolve(result);
           } catch (e) {
             // Not a complete JSON yet, keep collecting data
           }
