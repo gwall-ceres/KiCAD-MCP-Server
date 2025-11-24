@@ -10,4 +10,11 @@ typing-extensions>=4.0.0
 # Logging
 colorlog>=6.7.0
 
+# HTTP clients for distributor APIs
+aiohttp>=3.9.0
+requests>=2.31.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
 kicad-skip

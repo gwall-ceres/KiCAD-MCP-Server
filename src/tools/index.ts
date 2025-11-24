@@ -12,3 +12,4 @@ export { registerDesignRuleTools } from './design-rules.js';
 export { registerExportTools } from './export.js';
 export { registerSchematicTools } from './schematic.js';
 export { registerSchematicDSLTools } from './schematic-dsl.js';
+export { registerDistributorTools } from './distributor.js';

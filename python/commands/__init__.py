@@ -9,6 +9,7 @@ from .routing import RoutingCommands
 from .design_rules import DesignRuleCommands
 from .export import ExportCommands
 from .schematic_dsl import SchematicDSLManager
+from .distributor_commands import DistributorCommands
 
 __all__ = [
     'ProjectCommands',
@@ -17,5 +18,6 @@ __all__ = [
     'RoutingCommands',
     'DesignRuleCommands',
     'ExportCommands',
-    'SchematicDSLManager'
+    'SchematicDSLManager',
+    'DistributorCommands'
 ]
