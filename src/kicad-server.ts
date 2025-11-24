@@ -278,6 +278,75 @@ class KiCADServer {
             },
             required: ['schematicPath', 'outputPath']
           }
+        },
+
+        // Distributor tools
+        {
+          name: 'search_component',
+          description: 'Search for components by MPN or keyword across Mouser, DigiKey, and Octopart',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              query: { type: 'string', description: 'MPN or keyword to search for' },
+              distributors: { type: 'array', items: { type: 'string' }, description: 'Optional list of distributors to search (mouser, digikey, octopart)' }
+            },
+            required: ['query']
+          }
+        },
+        {
+          name: 'get_component_availability',
+          description: 'Get detailed availability and pricing for a specific component',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              mpn: { type: 'string', description: 'Manufacturer part number' },
+              distributors: { type: 'array', items: { type: 'string' }, description: 'Optional list of distributors to check' }
+            },
+            required: ['mpn']
+          }
+        },
+        {
+          name: 'check_bom_availability',
+          description: 'Check availability and pricing for all components in the current BOM',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              bomPath: { type: 'string', description: 'Optional path to BOM file' }
+            }
+          }
+        },
+        {
+          name: 'find_component_alternatives',
+          description: 'Find alternative components for a specific part',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              mpn: { type: 'string', description: 'Manufacturer part number to find alternatives for' },
+              reason: { type: 'string', description: 'Reason for finding alternatives (obsolete, out of stock, cost reduction, etc.)' }
+            },
+            required: ['mpn', 'reason']
+          }
+        },
+        {
+          name: 'validate_bom_lifecycle',
+          description: 'Validate lifecycle status of all components in the BOM',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              bomPath: { type: 'string', description: 'Optional path to BOM file' }
+            }
+          }
+        },
+        {
+          name: 'compare_distributor_pricing',
+          description: 'Compare pricing across different distributors for a component',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              mpn: { type: 'string', description: 'Manufacturer part number' }
+            },
+            required: ['mpn']
+          }
         }
       ]
     }));
