@@ -13,6 +13,10 @@ import os
 from typing import Literal, Annotated, Any, Dict
 from pathlib import Path
 
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
 # Import FastMCP
 from fastmcp import FastMCP, Context
 from fastmcp.exceptions import ToolError

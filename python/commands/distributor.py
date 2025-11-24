@@ -1,485 +1,330 @@
 """
-Component matching and automotive alternative finder
-Core logic for finding automotive/industrial replacements
+Distributor integration for component search and availability checking
 """
-from typing import List, Dict, Any, Optional, Tuple
-from dataclasses import dataclass
+import os
+import pcbnew
+import logging
 import asyncio
-
+from typing import Dict, Any, Optional, List
 from api_clients import MouserClient, DigiKeyClient
-from api_clients.types import (
-    ComponentAvailability,
-    ComponentGrade,
-    AlternativeComponent,
-    Distributor
-)
-from api_clients.mock_data import search_mock_alternatives
+
+logger = logging.getLogger('kicad_interface')
 
 
-@dataclass
-class ComponentRequirements:
-    """Requirements for component replacement"""
-    temp_range: Tuple[float, float] = (-40, 125)  # Default: aviation requirements
-    grades: List[ComponentGrade] = None  # Acceptable grades
-    min_stock: int = 0
-    same_footprint: bool = True
-    max_price_increase_pct: float = 50.0  # Max 50% price increase acceptable
+class DistributorCommands:
+    """Handles distributor-related operations (Mouser, DigiKey)"""
 
+    def __init__(self, board: Optional[pcbnew.BOARD] = None):
+        """Initialize with optional board instance"""
+        self.board = board
+        # Initialize clients lazily when needed (requires API keys)
+        self._mouser_client = None
+        self._digikey_client = None
 
-async def find_automotive_alternative(
-    mpn: str,
-    requirements: Optional[ComponentRequirements] = None,
-    use_mock: bool = False,
-    mouser_api_key: Optional[str] = None,
-    digikey_client_id: Optional[str] = None,
-    digikey_client_secret: Optional[str] = None
-) -> Dict[str, Any]:
-    """
-    Find automotive/industrial alternative for a component
+    @property
+    def mouser_client(self):
+        """Get Mouser client, initialize if needed"""
+        if self._mouser_client is None:
+            api_key = os.getenv('MOUSER_API_KEY')
+            if api_key:
+                logger.info("Initializing Mouser client with API key")
+                self._mouser_client = MouserClient(api_key=api_key)
+            else:
+                logger.warning("No MOUSER_API_KEY found, using mock mode")
+                self._mouser_client = MouserClient(use_mock=True)
+        return self._mouser_client
 
-    Args:
-        mpn: Manufacturer part number of original component
-        requirements: ComponentRequirements object (default: aviation grade)
-        use_mock: Use mock data (for testing without API keys)
-        mouser_api_key: Mouser API key
-        digikey_client_id: DigiKey client ID
-        digikey_client_secret: DigiKey client secret
+    @property
+    def digikey_client(self):
+        """Get DigiKey client, initialize if needed"""
+        if self._digikey_client is None:
+            client_id = os.getenv('DIGIKEY_CLIENT_ID')
+            client_secret = os.getenv('DIGIKEY_CLIENT_SECRET')
+            if client_id and client_secret:
+                logger.info("Initializing DigiKey client with OAuth credentials")
+                self._digikey_client = DigiKeyClient(
+                    client_id=client_id,
+                    client_secret=client_secret
+                )
+            else:
+                logger.warning("No DigiKey credentials found, using mock mode")
+                self._digikey_client = DigiKeyClient(use_mock=True)
+        return self._digikey_client
 
-    Returns:
-        Dictionary with:
-        - original: Original component info
-        - alternatives: List of alternative components
-        - best_alternative: Recommended replacement
-        - analysis: Detailed comparison
-    """
-    if requirements is None:
-        requirements = ComponentRequirements(
-            temp_range=(-40, 125),
-            grades=[ComponentGrade.AUTOMOTIVE, ComponentGrade.INDUSTRIAL]
-        )
+    async def _search_all_distributors(self, query: str, distributors: Optional[List[str]] = None) -> Dict[str, Any]:
+        """Search across all specified distributors"""
+        active_distributors = distributors or ["mouser", "digikey"]
+        results = []
+        errors = []
 
-    # Step 1: Get original component info
-    original = await _get_component_info(
-        mpn,
-        use_mock,
-        mouser_api_key,
-        digikey_client_id,
-        digikey_client_secret
-    )
+        tasks = []
+        if "mouser" in active_distributors:
+            tasks.append(("mouser", self.mouser_client.search(query)))
+        if "digikey" in active_distributors:
+            tasks.append(("digikey", self.digikey_client.search(query)))
 
-    if not original:
+        for dist_name, task in tasks:
+            try:
+                dist_results = await task
+                if dist_results:
+                    results.extend(dist_results)
+            except Exception as e:
+                logger.warning(f"Error searching {dist_name}: {e}")
+                errors.append({"distributor": dist_name, "error": str(e)})
+
         return {
-            "success": False,
-            "error": f"Original component '{mpn}' not found",
-            "mpn": mpn
+            "success": True,
+            "query": query,
+            "results": results,
+            "total": len(results),
+            "errors": errors if errors else None
         }
 
-    # Step 2: Check if original already meets requirements
-    if _meets_requirements(original, requirements):
+    async def _get_availability_all(self, mpn: str, distributors: Optional[List[str]] = None) -> Dict[str, Any]:
+        """Get availability from all specified distributors"""
+        active_distributors = distributors or ["mouser", "digikey"]
+        availability = {}
+        errors = []
+
+        tasks = []
+        if "mouser" in active_distributors:
+            tasks.append(("mouser", self.mouser_client.get_availability(mpn)))
+        if "digikey" in active_distributors:
+            tasks.append(("digikey", self.digikey_client.get_availability(mpn)))
+
+        for dist_name, task in tasks:
+            try:
+                dist_avail = await task
+                if dist_avail:
+                    availability[dist_name] = dist_avail
+            except Exception as e:
+                logger.warning(f"Error getting availability from {dist_name}: {e}")
+                errors.append({"distributor": dist_name, "error": str(e)})
+
         return {
             "success": True,
             "mpn": mpn,
-            "original": _component_to_dict(original),
-            "already_compliant": True,
-            "message": f"{mpn} already meets aviation requirements"
+            "availability": availability,
+            "errors": errors if errors else None
         }
 
-    # Step 3: Search for alternatives
-    alternatives = await _search_alternatives(
-        mpn,
-        original,
-        requirements,
-        use_mock,
-        mouser_api_key,
-        digikey_client_id,
-        digikey_client_secret
-    )
+    def search_component(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Search for components by MPN or keyword"""
+        try:
+            query = params.get("query")
+            if not query:
+                return {
+                    "success": False,
+                    "message": "Missing query parameter"
+                }
 
-    if not alternatives:
-        return {
-            "success": True,
-            "mpn": mpn,
-            "original": _component_to_dict(original),
-            "alternatives": [],
-            "message": f"No suitable alternatives found for {mpn}"
-        }
+            distributors = params.get("distributors")
 
-    # Step 4: Score and rank alternatives
-    scored_alternatives = []
-    for alt in alternatives:
-        score = _score_alternative(original, alt, requirements)
-        scored_alternatives.append({
-            "component": alt,
-            "score": score,
-            "comparison": _compare_components(original, alt)
-        })
+            # Run async search
+            result = asyncio.run(self._search_all_distributors(query, distributors))
+            return result
 
-    # Sort by score (highest first)
-    scored_alternatives.sort(key=lambda x: x["score"], reverse=True)
-
-    # Best alternative is highest scored
-    best = scored_alternatives[0] if scored_alternatives else None
-
-    return {
-        "success": True,
-        "mpn": mpn,
-        "original": _component_to_dict(original),
-        "alternatives": [
-            {
-                "mpn": a["component"].mpn,
-                "manufacturer": a["component"].manufacturer,
-                "distributor": a["component"].distributor.value,
-                "stock": a["component"].stock,
-                "price": a["component"].unit_price,
-                "grade": a["component"].grade.value,
-                "temp_range": [a["component"].temp_min, a["component"].temp_max],
-                "aviation_suitable": a["component"].is_aviation_suitable,
-                "score": a["score"],
-                "comparison": a["comparison"]
+        except Exception as e:
+            logger.error(f"Error searching component: {e}")
+            return {
+                "success": False,
+                "message": f"Search failed: {str(e)}"
             }
-            for a in scored_alternatives[:5]  # Top 5 alternatives
-        ],
-        "best_alternative": {
-            "mpn": best["component"].mpn,
-            "manufacturer": best["component"].manufacturer,
-            "reason": _generate_recommendation_reason(original, best["component"]),
-            "price_difference": best["component"].unit_price - original.unit_price,
-            "price_difference_pct": (
-                (best["component"].unit_price - original.unit_price) / original.unit_price * 100
-                if original.unit_price > 0 else 0
-            )
-        } if best else None
-    }
 
+    def get_component_availability(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Get detailed availability and pricing for a specific component"""
+        try:
+            mpn = params.get("mpn")
+            if not mpn:
+                return {
+                    "success": False,
+                    "message": "Missing mpn parameter"
+                }
 
-async def _get_component_info(
-    mpn: str,
-    use_mock: bool,
-    mouser_api_key: Optional[str],
-    digikey_client_id: Optional[str],
-    digikey_client_secret: Optional[str]
-) -> Optional[ComponentAvailability]:
-    """Get component info from both Mouser and DigiKey, return best match"""
+            distributors = params.get("distributors")
 
-    results = []
+            # Run async availability check
+            result = asyncio.run(self._get_availability_all(mpn, distributors))
+            return result
 
-    # Try Mouser
-    try:
-        async with MouserClient(api_key=mouser_api_key, use_mock=use_mock) as mouser:
-            mouser_result = await mouser.search_by_mpn(mpn)
-            if mouser_result:
-                results.append(mouser_result)
-    except Exception as e:
-        print(f"Mouser search error: {e}")
+        except Exception as e:
+            logger.error(f"Error getting component availability: {e}")
+            return {
+                "success": False,
+                "message": f"Availability check failed: {str(e)}"
+            }
 
-    # Try DigiKey
-    try:
-        async with DigiKeyClient(
-            client_id=digikey_client_id,
-            client_secret=digikey_client_secret,
-            use_mock=use_mock
-        ) as digikey:
-            digikey_result = await digikey.search_by_mpn(mpn)
-            if digikey_result:
-                results.append(digikey_result)
-    except Exception as e:
-        print(f"DigiKey search error: {e}")
+    def check_bom_availability(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Check availability for all components in the BOM"""
+        try:
+            if not self.board:
+                return {
+                    "success": False,
+                    "message": "No board is loaded"
+                }
 
-    # Return result with best stock availability
-    if not results:
-        return None
+            # Extract components from board
+            components = []
+            for footprint in self.board.GetFootprints():
+                ref = footprint.GetReference()
+                value = footprint.GetValue()
+                # Try to find MPN from component properties
+                mpn = None
+                for prop in footprint.GetProperties():
+                    if prop.lower() in ["mpn", "manpartno", "mfr_part_num"]:
+                        mpn = footprint.GetProperties()[prop]
+                        break
 
-    return max(results, key=lambda x: x.stock)
+                if mpn:
+                    components.append({
+                        "reference": ref,
+                        "value": value,
+                        "mpn": mpn
+                    })
 
+            if not components:
+                return {
+                    "success": False,
+                    "message": "No components with MPN found in board"
+                }
 
-async def _search_alternatives(
-    original_mpn: str,
-    original: ComponentAvailability,
-    requirements: ComponentRequirements,
-    use_mock: bool,
-    mouser_api_key: Optional[str],
-    digikey_client_id: Optional[str],
-    digikey_client_secret: Optional[str]
-) -> List[ComponentAvailability]:
-    """
-    Search for alternative components
+            # Check availability for each component
+            results = []
+            for comp in components:
+                avail = self.get_component_availability({"mpn": comp["mpn"]})
+                results.append({
+                    "reference": comp["reference"],
+                    "value": comp["value"],
+                    "mpn": comp["mpn"],
+                    "availability": avail.get("availability", {})
+                })
 
-    Strategy:
-    1. Use mock search (if enabled) to get known alternatives
-    2. Extract component type from original (e.g., "buck converter", "MOSFET")
-    3. Search by keyword with filters
-    4. Filter results by requirements
-    """
-    alternatives = []
+            return {
+                "success": True,
+                "components": results,
+                "total": len(results)
+            }
 
-    # For mock mode, use predefined alternatives
-    if use_mock:
-        mock_alternatives = search_mock_alternatives(original_mpn, {
-            "grade": requirements.grades,
-            "temp_range": requirements.temp_range
-        })
+        except Exception as e:
+            logger.error(f"Error checking BOM availability: {e}")
+            return {
+                "success": False,
+                "message": f"BOM check failed: {str(e)}"
+            }
 
-        for alt_mpn in mock_alternatives:
-            alt_component = await _get_component_info(
-                alt_mpn,
-                use_mock,
-                mouser_api_key,
-                digikey_client_id,
-                digikey_client_secret
-            )
-            if alt_component and _meets_requirements(alt_component, requirements):
-                alternatives.append(alt_component)
+    def find_component_alternatives(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Find alternative components for a specific part"""
+        try:
+            mpn = params.get("mpn")
+            reason = params.get("reason", "unknown")
 
-        return alternatives
+            if not mpn:
+                return {
+                    "success": False,
+                    "message": "Missing mpn parameter"
+                }
 
-    # Real API search would go here
-    # TODO: Implement intelligent keyword search based on original component
-    # For now, return empty list (will be implemented with real APIs)
+            # Get original component info
+            original = self.get_component_availability({"mpn": mpn})
 
-    return alternatives
+            # Search for similar components (simplified - just search by base part number)
+            base_part = mpn.split("-")[0] if "-" in mpn else mpn[:8]
+            alternatives = self.search_component({"query": base_part})
 
+            return {
+                "success": True,
+                "mpn": mpn,
+                "reason": reason,
+                "original": original,
+                "alternatives": alternatives.get("results", [])
+            }
 
-def _meets_requirements(
-    component: ComponentAvailability,
-    requirements: ComponentRequirements
-) -> bool:
-    """Check if component meets requirements"""
+        except Exception as e:
+            logger.error(f"Error finding alternatives: {e}")
+            return {
+                "success": False,
+                "message": f"Alternative search failed: {str(e)}"
+            }
 
-    # Check temperature range
-    if component.temp_min is None or component.temp_max is None:
-        return False
+    def validate_bom_lifecycle(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate lifecycle status of components in the BOM"""
+        try:
+            bom_check = self.check_bom_availability(params)
 
-    temp_min, temp_max = requirements.temp_range
-    if component.temp_min > temp_min or component.temp_max < temp_max:
-        return False
+            if not bom_check.get("success"):
+                return bom_check
 
-    # Check grade if specified
-    if requirements.grades:
-        if component.grade not in requirements.grades:
-            return False
+            # Analyze lifecycle status from availability data
+            lifecycle_issues = []
+            for comp in bom_check.get("components", []):
+                avail = comp.get("availability", {})
+                for dist, info in avail.items():
+                    lifecycle = info.get("lifecycle_status", "unknown")
+                    if lifecycle.lower() in ["obsolete", "nrnd", "discontinued"]:
+                        lifecycle_issues.append({
+                            "reference": comp["reference"],
+                            "mpn": comp["mpn"],
+                            "status": lifecycle,
+                            "distributor": dist
+                        })
 
-    # Check minimum stock
-    if component.stock < requirements.min_stock:
-        return False
+            return {
+                "success": True,
+                "total_components": len(bom_check.get("components", [])),
+                "issues": lifecycle_issues,
+                "issue_count": len(lifecycle_issues)
+            }
 
-    return True
+        except Exception as e:
+            logger.error(f"Error validating BOM lifecycle: {e}")
+            return {
+                "success": False,
+                "message": f"Lifecycle validation failed: {str(e)}"
+            }
 
+    def compare_distributor_pricing(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Compare pricing across distributors for a component"""
+        try:
+            mpn = params.get("mpn")
+            if not mpn:
+                return {
+                    "success": False,
+                    "message": "Missing mpn parameter"
+                }
 
-def _score_alternative(
-    original: ComponentAvailability,
-    alternative: ComponentAvailability,
-    requirements: ComponentRequirements
-) -> float:
-    """
-    Score an alternative component (0-100, higher is better)
+            # Get availability from all distributors
+            avail = self.get_component_availability({"mpn": mpn})
 
-    Scoring factors:
-    - Grade quality (automotive > industrial > commercial)
-    - Temperature margin
-    - Stock availability
-    - Price (prefer cheaper or similar)
-    - Same manufacturer (bonus)
-    """
-    score = 0.0
+            if not avail.get("success"):
+                return avail
 
-    # Grade score (30 points max)
-    grade_scores = {
-        ComponentGrade.AUTOMOTIVE: 30,
-        ComponentGrade.INDUSTRIAL: 25,
-        ComponentGrade.MILITARY: 20,
-        ComponentGrade.COMMERCIAL: 10,
-        ComponentGrade.UNKNOWN: 0
-    }
-    score += grade_scores.get(alternative.grade, 0)
+            # Extract and compare pricing
+            pricing_comparison = []
+            for dist, info in avail.get("availability", {}).items():
+                pricing = info.get("pricing", [])
+                if pricing:
+                    best_price = min(pricing, key=lambda x: x.get("price_per_unit", float('inf')))
+                    pricing_comparison.append({
+                        "distributor": dist,
+                        "stock": info.get("stock", 0),
+                        "best_price": best_price.get("price_per_unit"),
+                        "moq": best_price.get("quantity"),
+                        "all_pricing": pricing
+                    })
 
-    # Temperature margin score (20 points max)
-    if alternative.temp_min is not None and alternative.temp_max is not None:
-        required_min, required_max = requirements.temp_range
-        temp_margin_low = required_min - alternative.temp_min  # Extra margin below
-        temp_margin_high = alternative.temp_max - required_max  # Extra margin above
+            # Sort by best price
+            pricing_comparison.sort(key=lambda x: x.get("best_price", float('inf')))
 
-        # Give points for exceeding requirements
-        if temp_margin_low >= 0 and temp_margin_high >= 0:
-            score += 20
-        elif temp_margin_low >= -10 and temp_margin_high >= -10:
-            score += 10
+            return {
+                "success": True,
+                "mpn": mpn,
+                "pricing": pricing_comparison,
+                "recommended": pricing_comparison[0] if pricing_comparison else None
+            }
 
-    # Stock availability score (20 points max)
-    if alternative.stock >= 1000:
-        score += 20
-    elif alternative.stock >= 100:
-        score += 15
-    elif alternative.stock >= 10:
-        score += 10
-    elif alternative.stock > 0:
-        score += 5
-
-    # Price score (20 points max)
-    if original.unit_price > 0 and alternative.unit_price > 0:
-        price_ratio = alternative.unit_price / original.unit_price
-
-        if price_ratio <= 0.9:  # Cheaper
-            score += 20
-        elif price_ratio <= 1.0:  # Same price
-            score += 18
-        elif price_ratio <= 1.2:  # Up to 20% more expensive
-            score += 15
-        elif price_ratio <= 1.5:  # Up to 50% more expensive
-            score += 10
-
-    # Same manufacturer bonus (10 points)
-    if original.manufacturer.lower() == alternative.manufacturer.lower():
-        score += 10
-
-    return score
-
-
-def _compare_components(
-    original: ComponentAvailability,
-    alternative: ComponentAvailability
-) -> Dict[str, Any]:
-    """Generate side-by-side comparison"""
-
-    return {
-        "manufacturer": {
-            "original": original.manufacturer,
-            "alternative": alternative.manufacturer,
-            "same": original.manufacturer.lower() == alternative.manufacturer.lower()
-        },
-        "grade": {
-            "original": original.grade.value,
-            "alternative": alternative.grade.value,
-            "better": _is_grade_better(alternative.grade, original.grade)
-        },
-        "temperature": {
-            "original": [original.temp_min, original.temp_max],
-            "alternative": [alternative.temp_min, alternative.temp_max],
-            "better": (
-                alternative.temp_min is not None and
-                alternative.temp_max is not None and
-                original.temp_min is not None and
-                original.temp_max is not None and
-                alternative.temp_min <= original.temp_min and
-                alternative.temp_max >= original.temp_max
-            )
-        },
-        "price": {
-            "original": original.unit_price,
-            "alternative": alternative.unit_price,
-            "difference": alternative.unit_price - original.unit_price,
-            "difference_pct": (
-                (alternative.unit_price - original.unit_price) / original.unit_price * 100
-                if original.unit_price > 0 else 0
-            ),
-            "cheaper": alternative.unit_price < original.unit_price
-        },
-        "stock": {
-            "original": original.stock,
-            "alternative": alternative.stock,
-            "better": alternative.stock > original.stock
-        }
-    }
-
-
-def _is_grade_better(grade1: ComponentGrade, grade2: ComponentGrade) -> bool:
-    """Check if grade1 is better than grade2"""
-    grade_hierarchy = {
-        ComponentGrade.MILITARY: 4,
-        ComponentGrade.AUTOMOTIVE: 3,
-        ComponentGrade.INDUSTRIAL: 2,
-        ComponentGrade.COMMERCIAL: 1,
-        ComponentGrade.UNKNOWN: 0
-    }
-    return grade_hierarchy.get(grade1, 0) > grade_hierarchy.get(grade2, 0)
-
-
-def _generate_recommendation_reason(
-    original: ComponentAvailability,
-    alternative: ComponentAvailability
-) -> str:
-    """Generate human-readable recommendation reason"""
-
-    reasons = []
-
-    # Grade improvement
-    if _is_grade_better(alternative.grade, original.grade):
-        reasons.append(f"Upgraded to {alternative.grade.value} grade")
-
-    # Temperature range improvement
-    if (alternative.temp_min is not None and alternative.temp_max is not None and
-        original.temp_min is not None and original.temp_max is not None):
-        if alternative.temp_min < original.temp_min or alternative.temp_max > original.temp_max:
-            reasons.append(
-                f"Better temperature range ({alternative.temp_min}C to {alternative.temp_max}C "
-                f"vs {original.temp_min}C to {original.temp_max}C)"
-            )
-
-    # Aviation suitable
-    if alternative.is_aviation_suitable and not original.is_aviation_suitable:
-        reasons.append("Meets aviation requirements (-40C to 125C)")
-
-    # Price
-    if alternative.unit_price < original.unit_price:
-        savings = original.unit_price - alternative.unit_price
-        reasons.append(f"Costs less (save ${savings:.2f} per unit)")
-    elif alternative.unit_price > original.unit_price:
-        increase = alternative.unit_price - original.unit_price
-        reasons.append(f"Costs ${increase:.2f} more per unit for higher grade")
-
-    # Stock
-    if alternative.stock > original.stock:
-        reasons.append(f"Better availability ({alternative.stock:,} in stock)")
-
-    return "; ".join(reasons) if reasons else "Meets requirements"
-
-
-def _component_to_dict(component: ComponentAvailability) -> Dict[str, Any]:
-    """Convert ComponentAvailability to dictionary"""
-    return {
-        "mpn": component.mpn,
-        "manufacturer": component.manufacturer,
-        "description": component.description,
-        "distributor": component.distributor.value,
-        "stock": component.stock,
-        "price": component.unit_price,
-        "grade": component.grade.value,
-        "temp_range": [component.temp_min, component.temp_max],
-        "package": component.package,
-        "aviation_suitable": component.is_aviation_suitable,
-        "datasheet_url": component.datasheet_url,
-        "product_url": component.product_url
-    }
-
-
-def check_aviation_compliance(component: ComponentAvailability) -> Dict[str, Any]:
-    """
-    Check if component meets aviation requirements
-
-    Aviation requirements:
-    - Temperature range: -40°C to +125°C minimum
-    - Preferably automotive (AEC-Q) or industrial grade
-    """
-    compliant = component.is_aviation_suitable
-
-    issues = []
-    if component.temp_min is None or component.temp_max is None:
-        issues.append("Temperature range not specified")
-    elif component.temp_min > -40:
-        issues.append(f"Min temperature {component.temp_min}C > -40C requirement")
-    elif component.temp_max < 125:
-        issues.append(f"Max temperature {component.temp_max}C < 125C requirement")
-
-    if component.grade == ComponentGrade.COMMERCIAL:
-        issues.append("Commercial grade (prefer automotive/industrial)")
-
-    return {
-        "mpn": component.mpn,
-        "compliant": compliant,
-        "grade": component.grade.value,
-        "temp_range": [component.temp_min, component.temp_max],
-        "issues": issues,
-        "recommendation": (
-            "Component meets aviation requirements" if compliant
-            else f"Upgrade needed: {'; '.join(issues)}"
-        )
-    }
+        except Exception as e:
+            logger.error(f"Error comparing pricing: {e}")
+            return {
+                "success": False,
+                "message": f"Pricing comparison failed: {str(e)}"
+            }
