@@ -241,3 +241,32 @@ class BaseDistributorClient(ABC):
             Search results
         """
         pass
+
+    async def search(self, query: str) -> list:
+        """
+        Convenience method to search for components by keyword
+
+        Args:
+            query: Search query (keyword or MPN)
+
+        Returns:
+            List of search results
+        """
+        result = await self.search_by_keyword(query)
+        # Return list of results for consistency
+        if isinstance(result, list):
+            return result
+        return []
+
+    async def get_availability(self, mpn: str) -> Dict[str, Any]:
+        """
+        Convenience method to get component availability by MPN
+
+        Args:
+            mpn: Manufacturer part number
+
+        Returns:
+            Component availability data
+        """
+        result = await self.search_by_mpn(mpn)
+        return result if result else {}
