@@ -921,13 +921,26 @@ def run_drc(
 
 @mcp.tool
 def get_drc_violations(
-    severity: Annotated[Literal["error", "warning", "all"] | None, Field(description="Filter violations by severity")] = None
+    severity: Annotated[Literal["error", "warning", "all"] | None, Field(description="Filter violations by severity")] = None,
+    limit: Annotated[int | None, Field(description="Maximum number of violations to return (default: 100, max: 500)")] = None,
+    offset: Annotated[int | None, Field(description="Number of violations to skip for pagination (default: 0)")] = None,
+    summary_only: Annotated[bool | None, Field(description="If True, return only summary without violations list (default: False)")] = None
 ) -> Dict[str, Any]:
-    """Get list of DRC violations from the current board."""
+    """Get list of DRC violations from the current board.
+
+    For large result sets (>100 violations), this automatically returns only summary
+    statistics and the file path. Use limit/offset parameters to paginate through results,
+    or read the violations file directly with the Read tool."""
     try:
         params = {}
         if severity:
             params["severity"] = severity
+        if limit is not None:
+            params["limit"] = limit
+        if offset is not None:
+            params["offset"] = offset
+        if summary_only is not None:
+            params["summary_only"] = summary_only
         return design_rule_commands.get_drc_violations(params)
     except Exception as e:
         logger.error(f"Error getting DRC violations: {e}")
