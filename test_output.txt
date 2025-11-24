@@ -1,0 +1,1625 @@
+
+================================================================================
+TESTING KICAD SCHEMATIC DSL SYSTEM
+================================================================================
+
+Python version: 3.13.2 (tags/v3.13.2:4f8bb39, Feb  4 2025, 15:23:48) [MSC v.1942 64 bit (AMD64)]
+Working directory: C:\Users\geoff\Desktop\projects\KiCAD-MCP-Server
+
+================================================================================
+[1/3] Testing get_schematic_index
+================================================================================
+
+Project: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro-DB_rev00005.kicad_sch
+============================================================
+Starting schematic parsing: Astro-DB_rev00005.kicad_sch
+============================================================
+Extracting components from Astro-DB_rev00005.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 0 symbols in 0.00s
+  Parsing components...
+Extracted 0 components in 0.00s
+[Step 2/8] Extracted components in 0.00s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 0 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.00s
+Found 0 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors1.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors1.kicad_sch
+============================================================
+Extracting components from Astro_Connectors1.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 54 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/54...
+Extracted 54 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 72 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 11 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 54 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors2.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors2.kicad_sch
+============================================================
+Extracting components from Astro_Connectors2.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 9 symbols in 0.00s
+  Parsing components...
+Extracted 9 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 19 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 20 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 9 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors3.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors3.kicad_sch
+============================================================
+Extracting components from Astro_Connectors3.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 30 symbols in 0.00s
+  Parsing components...
+Extracted 30 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 18 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 32 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 30 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\battery_charger.kicad_sch
+============================================================
+Starting schematic parsing: battery_charger.kicad_sch
+============================================================
+Extracting components from battery_charger.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 108 symbols in 0.02s
+  Parsing components...
+    Parsing component 50/108...
+    Parsing component 100/108...
+Extracted 108 components in 0.03s
+[Step 2/8] Extracted components in 0.03s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 58 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.01s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.05s
+Found 108 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Bluetooth.kicad_sch
+============================================================
+Starting schematic parsing: Bluetooth.kicad_sch
+============================================================
+Extracting components from Bluetooth.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 36 symbols in 0.00s
+  Parsing components...
+Extracted 36 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 20 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 36 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\LED_Drivers.kicad_sch
+============================================================
+Starting schematic parsing: LED_Drivers.kicad_sch
+============================================================
+Extracting components from LED_Drivers.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 25 symbols in 0.00s
+  Parsing components...
+Extracted 25 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 9 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 25 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\power_input.kicad_sch
+============================================================
+Starting schematic parsing: power_input.kicad_sch
+============================================================
+Extracting components from power_input.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 34 symbols in 0.01s
+  Parsing components...
+Extracted 34 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 2 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 34 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Misc.kicad_sch
+============================================================
+Starting schematic parsing: Power_Misc.kicad_sch
+============================================================
+Extracting components from Power_Misc.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 69 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/69...
+Extracted 69 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 23 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 69 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Supplies.kicad_sch
+============================================================
+Starting schematic parsing: Power_Supplies.kicad_sch
+============================================================
+Extracting components from Power_Supplies.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 46 symbols in 0.01s
+  Parsing components...
+Extracted 46 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 10 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 1 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 45 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Switches.kicad_sch
+============================================================
+Starting schematic parsing: Power_Switches.kicad_sch
+============================================================
+Extracting components from Power_Switches.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 34 symbols in 0.00s
+  Parsing components...
+Extracted 34 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 4 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 1 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 34 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_IO.kicad_sch
+============================================================
+Starting schematic parsing: uC_IO.kicad_sch
+============================================================
+Extracting components from uC_IO.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 14 symbols in 0.01s
+  Parsing components...
+Extracted 14 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 155 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 2 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 10 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_Peripherals.kicad_sch
+============================================================
+Starting schematic parsing: uC_Peripherals.kicad_sch
+============================================================
+Extracting components from uC_Peripherals.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 70 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/70...
+Extracted 70 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 47 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 2 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 70 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_Power.kicad_sch
+============================================================
+Starting schematic parsing: uC_Power.kicad_sch
+============================================================
+Extracting components from uC_Power.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 53 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/53...
+Extracted 53 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 2 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 53 components and 0 nets
+============================================================
+Parsing PCB netlist from Astro-DB_rev00005.kicad_pcb...
+Extracted connectivity for 384 components
+
+[OK] get_schematic_index succeeded
+
+# SCHEMATIC INDEX
+
+## Pages
+- Astro_Connectors1 (54 components, 60 nets)
+- Astro_Connectors2 (9 components, 19 nets)
+- Astro_Connectors3 (30 components, 150 nets)
+- Bluetooth (36 components, 18 nets)
+- LED_Drivers (25 components, 16 nets)
+- Power_Misc (69 components, 40 nets)
+- Power_Supplies (45 components, 25 nets)
+- Power_Switches (34 components, 22 nets)
+- battery_charger (108 components, 66 nets)
+- power_input (34 components, 14 nets)
+- uC_IO (10 components, 53 nets)
+- uC_Peripherals (70 components, 50 nets)
+- uC_Power (53 components, 126 nets)
+
+## Inter-Page Signals
+- /Astro_Connectors1/GIGE0_A_N: Astro_Connectors1 ? Astro_Connectors3
+- /Astro_Connectors1/GIGE0_A_P: Astro_Connectors1 ? Astro_Connectors3
+- /Astro_Connectors1/GIGE0_B_N: Astro_Connectors1 ? Astro_Connectors3
+- /Astro_Connectors1/GIGE0_B_P: Astro_Connectors1 ? Astro_Connectors3
+- /Astro_Connectors1/GIGE0_C_N: Astro_Connectors1 ? Astro_Connectors3
+- /Astro_Connectors1/GIGE0_C_P: Astro_Connectors1 ? Astro_Connectors3
+-
+
+... (output truncated)
+
+================================================================================
+[2/3] Testing get_schematic_page
+================================================================================
+
+Project: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005
+Page: battery_charger
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro-DB_rev00005.kicad_sch
+============================================================
+Starting schematic parsing: Astro-DB_rev00005.kicad_sch
+============================================================
+Extracting components from Astro-DB_rev00005.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 0 symbols in 0.00s
+  Parsing components...
+Extracted 0 components in 0.00s
+[Step 2/8] Extracted components in 0.00s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 0 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.00s
+Found 0 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors1.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors1.kicad_sch
+============================================================
+Extracting components from Astro_Connectors1.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 54 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/54...
+Extracted 54 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 72 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 11 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 54 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors2.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors2.kicad_sch
+============================================================
+Extracting components from Astro_Connectors2.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 9 symbols in 0.00s
+  Parsing components...
+Extracted 9 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 19 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 20 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 9 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors3.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors3.kicad_sch
+============================================================
+Extracting components from Astro_Connectors3.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 30 symbols in 0.01s
+  Parsing components...
+Extracted 30 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 18 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 32 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 30 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\battery_charger.kicad_sch
+============================================================
+Starting schematic parsing: battery_charger.kicad_sch
+============================================================
+Extracting components from battery_charger.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 108 symbols in 0.02s
+  Parsing components...
+    Parsing component 50/108...
+    Parsing component 100/108...
+Extracted 108 components in 0.03s
+[Step 2/8] Extracted components in 0.03s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 58 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.01s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.05s
+Found 108 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Bluetooth.kicad_sch
+============================================================
+Starting schematic parsing: Bluetooth.kicad_sch
+============================================================
+Extracting components from Bluetooth.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 36 symbols in 0.00s
+  Parsing components...
+Extracted 36 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 20 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 36 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\LED_Drivers.kicad_sch
+============================================================
+Starting schematic parsing: LED_Drivers.kicad_sch
+============================================================
+Extracting components from LED_Drivers.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 25 symbols in 0.00s
+  Parsing components...
+Extracted 25 components in 0.00s
+[Step 2/8] Extracted components in 0.00s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 9 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 25 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\power_input.kicad_sch
+============================================================
+Starting schematic parsing: power_input.kicad_sch
+============================================================
+Extracting components from power_input.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 34 symbols in 0.01s
+  Parsing components...
+Extracted 34 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 2 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 34 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Misc.kicad_sch
+============================================================
+Starting schematic parsing: Power_Misc.kicad_sch
+============================================================
+Extracting components from Power_Misc.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 69 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/69...
+Extracted 69 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 23 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 69 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Supplies.kicad_sch
+============================================================
+Starting schematic parsing: Power_Supplies.kicad_sch
+============================================================
+Extracting components from Power_Supplies.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 46 symbols in 0.01s
+  Parsing components...
+Extracted 46 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 10 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 1 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 45 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Switches.kicad_sch
+============================================================
+Starting schematic parsing: Power_Switches.kicad_sch
+============================================================
+Extracting components from Power_Switches.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 34 symbols in 0.00s
+  Parsing components...
+Extracted 34 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 4 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 1 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 34 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_IO.kicad_sch
+============================================================
+Starting schematic parsing: uC_IO.kicad_sch
+============================================================
+Extracting components from uC_IO.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 14 symbols in 0.01s
+  Parsing components...
+Extracted 14 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 155 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 2 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 10 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_Peripherals.kicad_sch
+============================================================
+Starting schematic parsing: uC_Peripherals.kicad_sch
+============================================================
+Extracting components from uC_Peripherals.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 70 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/70...
+Extracted 70 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 47 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 2 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 70 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_Power.kicad_sch
+============================================================
+Starting schematic parsing: uC_Power.kicad_sch
+============================================================
+Extracting components from uC_Power.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 53 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/53...
+Extracted 53 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 2 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 53 components and 0 nets
+============================================================
+Parsing PCB netlist from Astro-DB_rev00005.kicad_pcb...
+Extracted connectivity for 384 components
+
+[OK] get_schematic_page succeeded for page 'battery_charger'
+
+# PAGE: battery_charger
+
+# COMPONENTS
+DEF CONN 16 Position Elevated Socket Connector Through Hole
+COMP J200 (ESQ-108-12-L-D)
+  MPN: ESQ-108-12-L-D
+  FP: ESQ-108-12-L-D
+  PINS:
+    1:
+    2:
+    3:
+    4:
+    5:
+    6:
+    7:
+    8:
+    9:
+    10:
+    11:
+    12:
+    13:
+    14:
+    15:
+    16:
+DEF TRANSISTOR P-Channel 30V 50A (Tc) 4.8W (Ta), 57W (Tc) Surface Mount PowerPAK?? 1212-8S (3.3x3.3)
+COMP Q200 (SISS27DN-T1-GE3)
+  MPN: SISS27DN-T1-GE3
+  FP: PowerPAK_1212-8S
+  PINS:
+    D: D
+
+... (306 total lines)
+
+================================================================================
+[3/3] Testing get_schematic_context
+================================================================================
+
+Project: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005
+Component: Q200
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro-DB_rev00005.kicad_sch
+============================================================
+Starting schematic parsing: Astro-DB_rev00005.kicad_sch
+============================================================
+Extracting components from Astro-DB_rev00005.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 0 symbols in 0.00s
+  Parsing components...
+Extracted 0 components in 0.00s
+[Step 2/8] Extracted components in 0.00s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 0 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.00s
+Found 0 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors1.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors1.kicad_sch
+============================================================
+Extracting components from Astro_Connectors1.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 54 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/54...
+Extracted 54 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 72 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 11 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 54 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors2.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors2.kicad_sch
+============================================================
+Extracting components from Astro_Connectors2.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 9 symbols in 0.00s
+  Parsing components...
+Extracted 9 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 19 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 20 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 9 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Astro_Connectors3.kicad_sch
+============================================================
+Starting schematic parsing: Astro_Connectors3.kicad_sch
+============================================================
+Extracting components from Astro_Connectors3.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 30 symbols in 0.01s
+  Parsing components...
+Extracted 30 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 18 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 32 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 30 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\battery_charger.kicad_sch
+============================================================
+Starting schematic parsing: battery_charger.kicad_sch
+============================================================
+Extracting components from battery_charger.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 108 symbols in 0.02s
+  Parsing components...
+    Parsing component 50/108...
+    Parsing component 100/108...
+Extracted 108 components in 0.03s
+[Step 2/8] Extracted components in 0.03s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 58 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.01s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.05s
+Found 108 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Bluetooth.kicad_sch
+============================================================
+Starting schematic parsing: Bluetooth.kicad_sch
+============================================================
+Extracting components from Bluetooth.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 36 symbols in 0.01s
+  Parsing components...
+Extracted 36 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 20 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 36 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\LED_Drivers.kicad_sch
+============================================================
+Starting schematic parsing: LED_Drivers.kicad_sch
+============================================================
+Extracting components from LED_Drivers.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 25 symbols in 0.00s
+  Parsing components...
+Extracted 25 components in 0.00s
+[Step 2/8] Extracted components in 0.00s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 9 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 25 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\power_input.kicad_sch
+============================================================
+Starting schematic parsing: power_input.kicad_sch
+============================================================
+Extracting components from power_input.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 34 symbols in 0.01s
+  Parsing components...
+Extracted 34 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 2 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 34 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Misc.kicad_sch
+============================================================
+Starting schematic parsing: Power_Misc.kicad_sch
+============================================================
+Extracting components from Power_Misc.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 69 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/69...
+Extracted 69 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 23 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 69 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Supplies.kicad_sch
+============================================================
+Starting schematic parsing: Power_Supplies.kicad_sch
+============================================================
+Extracting components from Power_Supplies.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 46 symbols in 0.01s
+  Parsing components...
+Extracted 46 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 10 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 1 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 45 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\Power_Switches.kicad_sch
+============================================================
+Starting schematic parsing: Power_Switches.kicad_sch
+============================================================
+Extracting components from Power_Switches.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.00s
+  Extracting symbol expressions...
+  Found 34 symbols in 0.00s
+  Parsing components...
+Extracted 34 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 4 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 1 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.01s
+Found 34 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_IO.kicad_sch
+============================================================
+Starting schematic parsing: uC_IO.kicad_sch
+============================================================
+Extracting components from uC_IO.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 14 symbols in 0.01s
+  Parsing components...
+Extracted 14 components in 0.01s
+[Step 2/8] Extracted components in 0.01s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 155 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 2 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 10 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_Peripherals.kicad_sch
+============================================================
+Starting schematic parsing: uC_Peripherals.kicad_sch
+============================================================
+Extracting components from uC_Peripherals.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 70 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/70...
+Extracted 70 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 47 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 2 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 70 components and 0 nets
+============================================================
+Successfully loaded schematic: C:\Users\geoff\Desktop\projects\kicad-astro-daughterboard2\Astro-DB_rev00005\uC_Power.kicad_sch
+============================================================
+Starting schematic parsing: uC_Power.kicad_sch
+============================================================
+Extracting components from uC_Power.kicad_sch
+  Removing lib_symbols section...
+  Removed lib_symbols in 0.01s
+  Extracting symbol expressions...
+  Found 53 symbols in 0.01s
+  Parsing components...
+    Parsing component 50/53...
+Extracted 53 components in 0.02s
+[Step 2/8] Extracted components in 0.02s
+Extracting wires
+Extracted 0 wires
+[Step 3/8] Extracted wires in 0.00s
+Extracting junctions
+Extracted 0 junctions
+[Step 4/8] Extracted junctions in 0.00s
+Extracting labels
+Extracted 2 local labels, 0 global labels, and 0 hierarchical labels
+[Step 5/8] Extracted labels in 0.00s
+Extracting power symbols
+Extracted 0 power symbols
+[Step 6/8] Extracted power symbols in 0.00s
+Extracting no-connects
+Extracted 0 no-connects
+[Step 7/8] Extracted no-connects in 0.00s
+Building netlist from schematic data
+Note: Full netlist building requires complex connectivity tracing
+Found 0 potential nets from labels and power symbols
+Built netlist in 0.00s
+============================================================
+Schematic parsing complete in 0.02s
+Found 53 components and 0 nets
+============================================================
+Parsing PCB netlist from Astro-DB_rev00005.kicad_pcb...
+Extracted connectivity for 384 components
+
+[OK] get_schematic_context succeeded for Q200
+
+# CONTEXT: Q200
+
+# COMPONENTS
+DEF TRANSISTOR P-Channel 30V 50A (Tc) 4.8W (Ta), 57W (Tc) Surface Mount PowerPAK?? 1212-8S (3.3x3.3)
+COMP Q200 (SISS27DN-T1-GE3)
+  MPN: SISS27DN-T1-GE3
+  FP: PowerPAK_1212-8S
+  PINS:
+    D: D
+    G: G
+    S: S
+
+# CONTEXT_NEIGHBORS
+Q201 (SISS27DN-T1-GE3) - P-Channel 30V 50A (Tc) 4.8W (Ta), 57W (Tc) Surface Mount PowerPAK?? 1212-8S (3.3x3.3)
+Q202 (CSD87588N) - Synchronous Buck NexFET Power Block II, MPA0005A
+U200 (LTC1760CFW) - Charger IC Smart Batteries 48-TSSOP
+
+# NETS
+NET DCSUPPLY
+  CON: C208.1, C209.1, Q200.D(D), Q202.2, R200.2
+NET Net-(Q200-PadS)
+  CON: Q200.S(S), Q201.S(S)
+NET Net-(U200-GDCI)
+  CON: Q200.G(G), U200.7
+
+... (output truncated)
+
+================================================================================
+TEST SUMMARY
+================================================================================
+
+[OK] get_schematic_index
+[OK] get_schematic_page
+[OK] get_schematic_context
+
+Passed: 3/3

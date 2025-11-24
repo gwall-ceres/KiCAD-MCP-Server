@@ -277,9 +277,9 @@ class KiCADInterface:
             "export_schematic_pdf": self._handle_export_schematic_pdf,
 
             # Schematic DSL commands
-            "get_schematic_index": SchematicDSLManager.get_schematic_index,
-            "get_schematic_page": SchematicDSLManager.get_schematic_page,
-            "get_schematic_context": SchematicDSLManager.get_schematic_context,
+            "get_schematic_index": self._handle_get_schematic_index,
+            "get_schematic_page": self._handle_get_schematic_page,
+            "get_schematic_context": self._handle_get_schematic_context,
 
             # UI/Process management commands
             "check_kicad_ui": self._handle_check_kicad_ui,
@@ -476,6 +476,44 @@ class KiCADInterface:
         except Exception as e:
             logger.error(f"Error exporting schematic to PDF: {str(e)}")
             return {"success": False, "message": str(e)}
+
+    def _handle_get_schematic_index(self, params):
+        """Wrapper for SchematicDSLManager.get_schematic_index"""
+        logger.info("Getting schematic index")
+        project_path = params.get("project_path")
+        if not project_path:
+            return {"success": False, "error": "project_path is required"}
+
+        return SchematicDSLManager.get_schematic_index(project_path)
+
+    def _handle_get_schematic_page(self, params):
+        """Wrapper for SchematicDSLManager.get_schematic_page"""
+        logger.info("Getting schematic page")
+        project_path = params.get("project_path")
+        page_name = params.get("page_name")
+
+        if not project_path:
+            return {"success": False, "error": "project_path is required"}
+        if not page_name:
+            return {"success": False, "error": "page_name is required"}
+
+        return SchematicDSLManager.get_schematic_page(project_path, page_name)
+
+    def _handle_get_schematic_context(self, params):
+        """Wrapper for SchematicDSLManager.get_schematic_context"""
+        logger.info("Getting schematic context")
+        project_path = params.get("project_path")
+        component_ref = params.get("component_ref")
+        net_name = params.get("net_name")
+
+        if not project_path:
+            return {"success": False, "error": "project_path is required"}
+
+        return SchematicDSLManager.get_schematic_context(
+            project_path,
+            component_ref=component_ref,
+            net_name=net_name
+        )
 
     def _handle_check_kicad_ui(self, params):
         """Check if KiCAD UI is running"""
