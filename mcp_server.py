@@ -87,6 +87,7 @@ try:
     from commands.schematic import SchematicManager
     from commands.library import LibraryManager as FootprintLibraryManager, LibraryCommands
     from commands.schematic_dsl import SchematicDSLManager
+    from commands.distributor import DistributorCommands
     logger.info("Successfully imported all command handlers")
 except ImportError as e:
     logger.error(f"Failed to import command handlers: {e}")
@@ -113,6 +114,7 @@ routing_commands = RoutingCommands(board)
 design_rule_commands = DesignRuleCommands(board)
 export_commands = ExportCommands(board)
 library_commands = LibraryCommands(footprint_library)
+distributor_commands = DistributorCommands(board)
 
 logger.info("Initialized command handlers")
 
@@ -126,6 +128,7 @@ def update_board_reference(new_board):
     routing_commands.board = board
     design_rule_commands.board = board
     export_commands.board = board
+    distributor_commands.board = board
     logger.info("Updated board reference in all command handlers")
 
 
@@ -1112,6 +1115,100 @@ def launch_kicad_ui(
     except Exception as e:
         logger.error(f"Error launching KiCAD UI: {e}")
         raise ToolError(f"Failed to launch KiCAD UI: {str(e)}")
+
+
+# ============================================================================
+# DISTRIBUTOR TOOLS
+# ============================================================================
+
+@mcp.tool
+def search_component(
+    query: Annotated[str, Field(description="MPN or keyword to search for")],
+    distributors: Annotated[list[str] | None, Field(description="Optional list of distributors to search (mouser, digikey, octopart)")] = None
+) -> Dict[str, Any]:
+    """Search for components by MPN or keyword across Mouser, DigiKey, and Octopart."""
+    try:
+        params = {"query": query}
+        if distributors is not None:
+            params["distributors"] = distributors
+        return distributor_commands.search_component(params)
+    except Exception as e:
+        logger.error(f"Error searching component: {e}")
+        raise ToolError(f"Failed to search component: {str(e)}")
+
+
+@mcp.tool
+def get_component_availability(
+    mpn: Annotated[str, Field(description="Manufacturer part number")],
+    distributors: Annotated[list[str] | None, Field(description="Optional list of distributors to check")] = None
+) -> Dict[str, Any]:
+    """Get detailed availability and pricing for a specific component."""
+    try:
+        params = {"mpn": mpn}
+        if distributors is not None:
+            params["distributors"] = distributors
+        return distributor_commands.get_component_availability(params)
+    except Exception as e:
+        logger.error(f"Error getting component availability: {e}")
+        raise ToolError(f"Failed to get component availability: {str(e)}")
+
+
+@mcp.tool
+def check_bom_availability(
+    bomPath: Annotated[str | None, Field(description="Optional path to BOM file")] = None
+) -> Dict[str, Any]:
+    """Check availability and pricing for all components in the current BOM."""
+    try:
+        params = {}
+        if bomPath is not None:
+            params["bomPath"] = bomPath
+        return distributor_commands.check_bom_availability(params)
+    except Exception as e:
+        logger.error(f"Error checking BOM availability: {e}")
+        raise ToolError(f"Failed to check BOM availability: {str(e)}")
+
+
+@mcp.tool
+def find_component_alternatives(
+    mpn: Annotated[str, Field(description="Manufacturer part number to find alternatives for")],
+    reason: Annotated[str, Field(description="Reason for finding alternatives (obsolete, out of stock, cost reduction, etc.)")]
+) -> Dict[str, Any]:
+    """Find alternative components for a specific part."""
+    try:
+        return distributor_commands.find_component_alternatives({
+            "mpn": mpn,
+            "reason": reason
+        })
+    except Exception as e:
+        logger.error(f"Error finding component alternatives: {e}")
+        raise ToolError(f"Failed to find component alternatives: {str(e)}")
+
+
+@mcp.tool
+def validate_bom_lifecycle(
+    bomPath: Annotated[str | None, Field(description="Optional path to BOM file")] = None
+) -> Dict[str, Any]:
+    """Validate lifecycle status of all components in the BOM."""
+    try:
+        params = {}
+        if bomPath is not None:
+            params["bomPath"] = bomPath
+        return distributor_commands.validate_bom_lifecycle(params)
+    except Exception as e:
+        logger.error(f"Error validating BOM lifecycle: {e}")
+        raise ToolError(f"Failed to validate BOM lifecycle: {str(e)}")
+
+
+@mcp.tool
+def compare_distributor_pricing(
+    mpn: Annotated[str, Field(description="Manufacturer part number")]
+) -> Dict[str, Any]:
+    """Compare pricing across different distributors for a component."""
+    try:
+        return distributor_commands.compare_distributor_pricing({"mpn": mpn})
+    except Exception as e:
+        logger.error(f"Error comparing distributor pricing: {e}")
+        raise ToolError(f"Failed to compare distributor pricing: {str(e)}")
 
 
 # ============================================================================

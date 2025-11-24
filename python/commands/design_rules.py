@@ -446,8 +446,9 @@ class DesignRuleCommands:
 
             total_filtered = len(filtered_violations)
 
-            # If summary_only or too many violations, return file path instead
-            if summary_only or total_filtered > 100:
+            # If summary_only or too many violations (without explicit limit), return file path instead
+            has_explicit_limit = "limit" in params
+            if summary_only or (total_filtered > 100 and not has_explicit_limit):
                 return {
                     "success": True,
                     "message": f"Found {total_filtered} violations (filtered by severity: {severity})",
