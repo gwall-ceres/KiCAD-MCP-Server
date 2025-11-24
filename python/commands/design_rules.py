@@ -385,7 +385,19 @@ class DesignRuleCommands:
         return None
 
     def get_drc_violations(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Get list of DRC violations"""
+        """Get list of DRC violations from last run_drc
+
+        For large result sets (>100 violations), this returns only summary statistics
+        and the file path. Use limit/offset parameters to paginate through results.
+
+        Args:
+            severity: Filter by severity ("error", "warning", "all")
+            limit: Maximum number of violations to return (default: 100, max: 500)
+            offset: Number of violations to skip (default: 0)
+            summary_only: If True, return only summary without violations list (default: False)
+        """
+        import json
+
         try:
             if not self.board:
                 return {
@@ -395,28 +407,71 @@ class DesignRuleCommands:
                 }
 
             severity = params.get("severity", "all")
+            limit = min(params.get("limit", 100), 500)  # Cap at 500 for safety
+            offset = params.get("offset", 0)
+            summary_only = params.get("summary_only", False)
 
-            # Get DRC markers
-            violations = []
-            for marker in self.board.GetDRCMarkers():
-                violation = {
-                    "type": marker.GetErrorCode(),
-                    "severity": "error",  # KiCAD DRC markers are always errors
-                    "message": marker.GetDescription(),
-                    "location": {
-                        "x": marker.GetPos().x / 1000000,
-                        "y": marker.GetPos().y / 1000000,
-                        "unit": "mm"
-                    }
+            # Get the board file path to find the violations JSON
+            board_file = self.board.GetFileName()
+            if not board_file:
+                return {
+                    "success": False,
+                    "message": "No DRC results available",
+                    "errorDetails": "Run DRC first using run_drc tool"
                 }
 
-                # Filter by severity if specified
-                if severity == "all" or severity == violation["severity"]:
-                    violations.append(violation)
+            # Find the violations JSON file
+            board_dir = os.path.dirname(board_file)
+            board_name = os.path.splitext(os.path.basename(board_file))[0]
+            violations_file = os.path.join(board_dir, f"{board_name}_drc_violations.json")
+
+            if not os.path.exists(violations_file):
+                return {
+                    "success": False,
+                    "message": "No DRC results available",
+                    "errorDetails": f"Run DRC first using run_drc tool. Expected file: {violations_file}"
+                }
+
+            # Read violations from JSON file
+            with open(violations_file, 'r', encoding='utf-8') as f:
+                drc_data = json.load(f)
+
+            all_violations = drc_data.get("violations", [])
+
+            # Filter by severity if specified
+            if severity != "all":
+                filtered_violations = [v for v in all_violations if v.get("severity") == severity]
+            else:
+                filtered_violations = all_violations
+
+            total_filtered = len(filtered_violations)
+
+            # If summary_only or too many violations, return file path instead
+            if summary_only or total_filtered > 100:
+                return {
+                    "success": True,
+                    "message": f"Found {total_filtered} violations (filtered by severity: {severity})",
+                    "total": total_filtered,
+                    "summary": drc_data.get("severity_counts", {}),
+                    "timestamp": drc_data.get("timestamp", "unknown"),
+                    "violationsFile": violations_file,
+                    "hint": "For large result sets, use limit/offset parameters to paginate, or read the violations file directly"
+                }
+
+            # Apply pagination
+            paginated_violations = filtered_violations[offset:offset + limit]
 
             return {
                 "success": True,
-                "violations": violations
+                "violations": paginated_violations,
+                "total": total_filtered,
+                "returned": len(paginated_violations),
+                "offset": offset,
+                "limit": limit,
+                "has_more": (offset + limit) < total_filtered,
+                "summary": drc_data.get("severity_counts", {}),
+                "timestamp": drc_data.get("timestamp", "unknown"),
+                "violationsFile": violations_file
             }
 
         except Exception as e:

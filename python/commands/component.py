@@ -357,6 +357,85 @@ class ComponentCommands:
                 "errorDetails": str(e)
             }
 
+    def find_component(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Find a component by reference or value"""
+        try:
+            if not self.board:
+                return {
+                    "success": False,
+                    "message": "No board is loaded",
+                    "errorDetails": "Load or create a board first"
+                }
+
+            reference = params.get("reference")
+            value = params.get("value")
+
+            if not reference and not value:
+                return {
+                    "success": False,
+                    "message": "Missing search criteria",
+                    "errorDetails": "Either reference or value parameter is required"
+                }
+
+            found_components = []
+
+            # Search by reference
+            if reference:
+                module = self.board.FindFootprintByReference(reference)
+                if module:
+                    pos = module.GetPosition()
+                    found_components.append({
+                        "reference": module.GetReference(),
+                        "value": module.GetValue(),
+                        "footprint": module.GetFPIDAsString(),
+                        "position": {
+                            "x": pos.x / 1000000,
+                            "y": pos.y / 1000000,
+                            "unit": "mm"
+                        },
+                        "rotation": module.GetOrientation().AsDegrees(),
+                        "layer": self.board.GetLayerName(module.GetLayer())
+                    })
+
+            # Search by value if specified
+            if value and not found_components:
+                for module in self.board.GetFootprints():
+                    if module.GetValue() == value:
+                        pos = module.GetPosition()
+                        found_components.append({
+                            "reference": module.GetReference(),
+                            "value": module.GetValue(),
+                            "footprint": module.GetFPIDAsString(),
+                            "position": {
+                                "x": pos.x / 1000000,
+                                "y": pos.y / 1000000,
+                                "unit": "mm"
+                            },
+                            "rotation": module.GetOrientation().AsDegrees(),
+                            "layer": self.board.GetLayerName(module.GetLayer())
+                        })
+
+            if not found_components:
+                return {
+                    "success": False,
+                    "message": "Component not found",
+                    "errorDetails": f"Could not find component with reference='{reference}' or value='{value}'"
+                }
+
+            return {
+                "success": True,
+                "components": found_components,
+                "count": len(found_components)
+            }
+
+        except Exception as e:
+            logger.error(f"Error finding component: {str(e)}")
+            return {
+                "success": False,
+                "message": "Failed to find component",
+                "errorDetails": str(e)
+            }
+
     def get_component_properties(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Get detailed properties of a component"""
         try:
