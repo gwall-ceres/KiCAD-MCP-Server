@@ -108,7 +108,7 @@ class DistributorCommands:
             "errors": errors if errors else None
         }
 
-    def search_component(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def search_component(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Search for components by MPN or keyword"""
         try:
             query = params.get("query")
@@ -121,7 +121,7 @@ class DistributorCommands:
             distributors = params.get("distributors")
 
             # Run async search
-            result = asyncio.run(self._search_all_distributors(query, distributors))
+            result = await self._search_all_distributors(query, distributors)
             return result
 
         except Exception as e:
@@ -131,7 +131,7 @@ class DistributorCommands:
                 "message": f"Search failed: {str(e)}"
             }
 
-    def get_component_availability(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def get_component_availability(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Get detailed availability and pricing for a specific component"""
         try:
             mpn = params.get("mpn")
@@ -144,7 +144,7 @@ class DistributorCommands:
             distributors = params.get("distributors")
 
             # Run async availability check
-            result = asyncio.run(self._get_availability_all(mpn, distributors))
+            result = await self._get_availability_all(mpn, distributors)
             return result
 
         except Exception as e:
@@ -154,7 +154,7 @@ class DistributorCommands:
                 "message": f"Availability check failed: {str(e)}"
             }
 
-    def check_bom_availability(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def check_bom_availability(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Check availability for all components in the BOM"""
         try:
             if not self.board:
@@ -191,7 +191,7 @@ class DistributorCommands:
             # Check availability for each component
             results = []
             for comp in components:
-                avail = self.get_component_availability({"mpn": comp["mpn"]})
+                avail = await self.get_component_availability({"mpn": comp["mpn"]})
                 results.append({
                     "reference": comp["reference"],
                     "value": comp["value"],
@@ -212,7 +212,7 @@ class DistributorCommands:
                 "message": f"BOM check failed: {str(e)}"
             }
 
-    def find_component_alternatives(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def find_component_alternatives(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Find alternative components for a specific part"""
         try:
             mpn = params.get("mpn")
@@ -225,11 +225,11 @@ class DistributorCommands:
                 }
 
             # Get original component info
-            original = self.get_component_availability({"mpn": mpn})
+            original = await self.get_component_availability({"mpn": mpn})
 
             # Search for similar components (simplified - just search by base part number)
             base_part = mpn.split("-")[0] if "-" in mpn else mpn[:8]
-            alternatives = self.search_component({"query": base_part})
+            alternatives = await self.search_component({"query": base_part})
 
             return {
                 "success": True,
@@ -246,10 +246,10 @@ class DistributorCommands:
                 "message": f"Alternative search failed: {str(e)}"
             }
 
-    def validate_bom_lifecycle(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def validate_bom_lifecycle(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Validate lifecycle status of components in the BOM"""
         try:
-            bom_check = self.check_bom_availability(params)
+            bom_check = await self.check_bom_availability(params)
 
             if not bom_check.get("success"):
                 return bom_check
@@ -282,7 +282,7 @@ class DistributorCommands:
                 "message": f"Lifecycle validation failed: {str(e)}"
             }
 
-    def compare_distributor_pricing(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def compare_distributor_pricing(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Compare pricing across distributors for a component"""
         try:
             mpn = params.get("mpn")
@@ -293,7 +293,7 @@ class DistributorCommands:
                 }
 
             # Get availability from all distributors
-            avail = self.get_component_availability({"mpn": mpn})
+            avail = await self.get_component_availability({"mpn": mpn})
 
             if not avail.get("success"):
                 return avail

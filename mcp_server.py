@@ -1126,7 +1126,7 @@ def launch_kicad_ui(
 # ============================================================================
 
 @mcp.tool
-def search_component(
+async def search_component(
     query: Annotated[str, Field(description="MPN or keyword to search for")],
     distributors: Annotated[list[str] | None, Field(description="Optional list of distributors to search (mouser, digikey, octopart)")] = None
 ) -> Dict[str, Any]:
@@ -1135,14 +1135,14 @@ def search_component(
         params = {"query": query}
         if distributors is not None:
             params["distributors"] = distributors
-        return distributor_commands.search_component(params)
+        return await distributor_commands.search_component(params)
     except Exception as e:
         logger.error(f"Error searching component: {e}")
         raise ToolError(f"Failed to search component: {str(e)}")
 
 
 @mcp.tool
-def get_component_availability(
+async def get_component_availability(
     mpn: Annotated[str, Field(description="Manufacturer part number")],
     distributors: Annotated[list[str] | None, Field(description="Optional list of distributors to check")] = None
 ) -> Dict[str, Any]:
@@ -1151,14 +1151,14 @@ def get_component_availability(
         params = {"mpn": mpn}
         if distributors is not None:
             params["distributors"] = distributors
-        return distributor_commands.get_component_availability(params)
+        return await distributor_commands.get_component_availability(params)
     except Exception as e:
         logger.error(f"Error getting component availability: {e}")
         raise ToolError(f"Failed to get component availability: {str(e)}")
 
 
 @mcp.tool
-def check_bom_availability(
+async def check_bom_availability(
     bomPath: Annotated[str | None, Field(description="Optional path to BOM file")] = None
 ) -> Dict[str, Any]:
     """Check availability and pricing for all components in the current BOM."""
@@ -1166,20 +1166,20 @@ def check_bom_availability(
         params = {}
         if bomPath is not None:
             params["bomPath"] = bomPath
-        return distributor_commands.check_bom_availability(params)
+        return await distributor_commands.check_bom_availability(params)
     except Exception as e:
         logger.error(f"Error checking BOM availability: {e}")
         raise ToolError(f"Failed to check BOM availability: {str(e)}")
 
 
 @mcp.tool
-def find_component_alternatives(
+async def find_component_alternatives(
     mpn: Annotated[str, Field(description="Manufacturer part number to find alternatives for")],
     reason: Annotated[str, Field(description="Reason for finding alternatives (obsolete, out of stock, cost reduction, etc.)")]
 ) -> Dict[str, Any]:
     """Find alternative components for a specific part."""
     try:
-        return distributor_commands.find_component_alternatives({
+        return await distributor_commands.find_component_alternatives({
             "mpn": mpn,
             "reason": reason
         })
@@ -1189,7 +1189,7 @@ def find_component_alternatives(
 
 
 @mcp.tool
-def validate_bom_lifecycle(
+async def validate_bom_lifecycle(
     bomPath: Annotated[str | None, Field(description="Optional path to BOM file")] = None
 ) -> Dict[str, Any]:
     """Validate lifecycle status of all components in the BOM."""
@@ -1197,19 +1197,19 @@ def validate_bom_lifecycle(
         params = {}
         if bomPath is not None:
             params["bomPath"] = bomPath
-        return distributor_commands.validate_bom_lifecycle(params)
+        return await distributor_commands.validate_bom_lifecycle(params)
     except Exception as e:
         logger.error(f"Error validating BOM lifecycle: {e}")
         raise ToolError(f"Failed to validate BOM lifecycle: {str(e)}")
 
 
 @mcp.tool
-def compare_distributor_pricing(
+async def compare_distributor_pricing(
     mpn: Annotated[str, Field(description="Manufacturer part number")]
 ) -> Dict[str, Any]:
     """Compare pricing across different distributors for a component."""
     try:
-        return distributor_commands.compare_distributor_pricing({"mpn": mpn})
+        return await distributor_commands.compare_distributor_pricing({"mpn": mpn})
     except Exception as e:
         logger.error(f"Error comparing distributor pricing: {e}")
         raise ToolError(f"Failed to compare distributor pricing: {str(e)}")
