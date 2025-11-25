@@ -17,60 +17,58 @@ class DistributorCommands:
     def __init__(self, board: Optional[pcbnew.BOARD] = None):
         """Initialize with optional board instance"""
         self.board = board
-        # Initialize clients lazily when needed (requires API keys)
-        self._mouser_client = None
-        self._digikey_client = None
 
-    @property
-    def mouser_client(self):
-        """Get Mouser client, initialize if needed"""
-        if self._mouser_client is None:
-            api_key = os.getenv('MOUSER_API_KEY')
-            if api_key:
-                logger.info("Initializing Mouser client with API key")
-                self._mouser_client = MouserClient(api_key=api_key)
-            else:
-                logger.warning("No MOUSER_API_KEY found, using mock mode")
-                self._mouser_client = MouserClient(use_mock=True)
-        return self._mouser_client
+    def _create_mouser_client(self):
+        """Create a new Mouser client instance"""
+        api_key = os.getenv('MOUSER_API_KEY')
+        logger.info(f"Creating Mouser client, API key present: {bool(api_key)}")
+        if api_key:
+            return MouserClient(api_key=api_key)
+        else:
+            logger.debug("No MOUSER_API_KEY found, using mock mode")
+            return MouserClient(use_mock=True)
 
-    @property
-    def digikey_client(self):
-        """Get DigiKey client, initialize if needed"""
-        if self._digikey_client is None:
-            client_id = os.getenv('DIGIKEY_CLIENT_ID')
-            client_secret = os.getenv('DIGIKEY_CLIENT_SECRET')
-            if client_id and client_secret:
-                logger.info("Initializing DigiKey client with OAuth credentials")
-                self._digikey_client = DigiKeyClient(
-                    client_id=client_id,
-                    client_secret=client_secret
-                )
-            else:
-                logger.warning("No DigiKey credentials found, using mock mode")
-                self._digikey_client = DigiKeyClient(use_mock=True)
-        return self._digikey_client
+    def _create_digikey_client(self):
+        """Create a new DigiKey client instance"""
+        client_id = os.getenv('DIGIKEY_CLIENT_ID')
+        client_secret = os.getenv('DIGIKEY_CLIENT_SECRET')
+        if client_id and client_secret:
+            return DigiKeyClient(
+                client_id=client_id,
+                client_secret=client_secret
+            )
+        else:
+            logger.debug("No DigiKey credentials found, using mock mode")
+            return DigiKeyClient(use_mock=True)
 
     async def _search_all_distributors(self, query: str, distributors: Optional[List[str]] = None) -> Dict[str, Any]:
         """Search across all specified distributors"""
         active_distributors = distributors or ["mouser", "digikey"]
+        logger.info(f"Searching distributors: {active_distributors} for query: {query}")
         results = []
         errors = []
 
-        tasks = []
+        # Search Mouser if requested
         if "mouser" in active_distributors:
-            tasks.append(("mouser", self.mouser_client.search(query)))
-        if "digikey" in active_distributors:
-            tasks.append(("digikey", self.digikey_client.search(query)))
-
-        for dist_name, task in tasks:
             try:
-                dist_results = await task
-                if dist_results:
-                    results.extend(dist_results)
+                async with self._create_mouser_client() as client:
+                    dist_results = await client.search(query)
+                    if dist_results:
+                        results.extend(dist_results)
             except Exception as e:
-                logger.warning(f"Error searching {dist_name}: {e}")
-                errors.append({"distributor": dist_name, "error": str(e)})
+                logger.warning(f"Error searching mouser: {e}")
+                errors.append({"distributor": "mouser", "error": str(e)})
+
+        # Search DigiKey if requested
+        if "digikey" in active_distributors:
+            try:
+                async with self._create_digikey_client() as client:
+                    dist_results = await client.search(query)
+                    if dist_results:
+                        results.extend(dist_results)
+            except Exception as e:
+                logger.warning(f"Error searching digikey: {e}")
+                errors.append({"distributor": "digikey", "error": str(e)})
 
         return {
             "success": True,
@@ -86,20 +84,27 @@ class DistributorCommands:
         availability = {}
         errors = []
 
-        tasks = []
+        # Get Mouser availability if requested
         if "mouser" in active_distributors:
-            tasks.append(("mouser", self.mouser_client.get_availability(mpn)))
-        if "digikey" in active_distributors:
-            tasks.append(("digikey", self.digikey_client.get_availability(mpn)))
-
-        for dist_name, task in tasks:
             try:
-                dist_avail = await task
-                if dist_avail:
-                    availability[dist_name] = dist_avail
+                async with self._create_mouser_client() as client:
+                    dist_avail = await client.get_availability(mpn)
+                    if dist_avail:
+                        availability["mouser"] = dist_avail
             except Exception as e:
-                logger.warning(f"Error getting availability from {dist_name}: {e}")
-                errors.append({"distributor": dist_name, "error": str(e)})
+                logger.warning(f"Error getting availability from mouser: {e}")
+                errors.append({"distributor": "mouser", "error": str(e)})
+
+        # Get DigiKey availability if requested
+        if "digikey" in active_distributors:
+            try:
+                async with self._create_digikey_client() as client:
+                    dist_avail = await client.get_availability(mpn)
+                    if dist_avail:
+                        availability["digikey"] = dist_avail
+            except Exception as e:
+                logger.warning(f"Error getting availability from digikey: {e}")
+                errors.append({"distributor": "digikey", "error": str(e)})
 
         return {
             "success": True,

@@ -217,8 +217,7 @@ class KiCADInterface:
             
             # Board commands
             "set_board_size": self.board_commands.set_board_size,
-            "add_layer": self.board_commands.add_layer,
-            "set_active_layer": self.board_commands.set_active_layer,
+            # NOTE: add_layer and set_active_layer removed - they require GUI and don't work headlessly
             "get_board_info": self.board_commands.get_board_info,
             "get_layer_list": self.board_commands.get_layer_list,
             "get_board_2d_view": self.board_commands.get_board_2d_view,

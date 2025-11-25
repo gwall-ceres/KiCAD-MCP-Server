@@ -77,3 +77,10 @@ coverage.xml
 # OS
 Thumbs.db
 Desktop.ini
+
+# Temporary cleanup
+trash/
+nul
+
+# Local MCP config (machine-specific paths)
+.mcp.json

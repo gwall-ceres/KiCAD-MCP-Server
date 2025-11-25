@@ -230,6 +230,14 @@ class RoutingCommands:
             # Add via to board
             self.board.Add(via)
 
+            # Get via size - in KiCAD 9, GetWidth() requires a layer argument
+            # Use the from_layer to get the width
+            try:
+                via_size = via.GetWidth(from_id) / 1000000
+            except TypeError:
+                # Fallback for older KiCAD versions
+                via_size = via.GetWidth() / 1000000
+
             return {
                 "success": True,
                 "message": "Added via",
@@ -239,7 +247,7 @@ class RoutingCommands:
                         "y": position["y"],
                         "unit": position["unit"]
                     },
-                    "size": via.GetWidth() / 1000000,
+                    "size": via_size,
                     "drill": via.GetDrill() / 1000000,
                     "from_layer": from_layer,
                     "to_layer": to_layer,
@@ -348,10 +356,19 @@ class RoutingCommands:
             for net_code in range(netinfo.GetNetCount()):
                 net = netinfo.GetNetItem(net_code)
                 if net:
+                    # GetClassName was renamed in KiCAD 9
+                    try:
+                        net_class = net.GetClassName()
+                    except AttributeError:
+                        try:
+                            net_class = net.GetNetClassName()
+                        except AttributeError:
+                            net_class = "Default"
+
                     nets.append({
                         "name": net.GetNetname(),
                         "code": net.GetNetCode(),
-                        "class": net.GetClassName()
+                        "class": net_class
                     })
 
             return {

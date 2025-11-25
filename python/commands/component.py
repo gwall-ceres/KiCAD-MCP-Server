@@ -746,14 +746,14 @@ class ComponentCommands:
             new_reference = params.get("newReference")
             position = params.get("position")
             rotation = params.get("rotation")
-            
+
             if not reference or not new_reference:
                 return {
                     "success": False,
                     "message": "Missing parameters",
                     "errorDetails": "reference and newReference are required"
                 }
-                
+
             # Find the source component
             source = self.board.FindFootprintByReference(reference)
             if not source:
@@ -762,7 +762,7 @@ class ComponentCommands:
                     "message": "Component not found",
                     "errorDetails": f"Could not find component: {reference}"
                 }
-                
+
             # Check if new reference already exists
             if self.board.FindFootprintByReference(new_reference):
                 return {
@@ -770,20 +770,14 @@ class ComponentCommands:
                     "message": "Reference already exists",
                     "errorDetails": f"A component with reference {new_reference} already exists"
                 }
-                
-            # Create new footprint with the same properties
-            new_module = pcbnew.FOOTPRINT(self.board)
-            new_module.SetFootprintName(source.GetFPIDAsString())
-            new_module.SetValue(source.GetValue())
+
+            # Clone the source footprint using KiCAD's Clone method
+            # This is the correct way to duplicate a footprint in KiCAD 9
+            new_module = source.Duplicate()
+
+            # Set new reference
             new_module.SetReference(new_reference)
-            new_module.SetLayer(source.GetLayer())
-            
-            # Copy pads and other items
-            for pad in source.Pads():
-                new_pad = pcbnew.PAD(new_module)
-                new_pad.Copy(pad)
-                new_module.Add(new_pad)
-                
+
             # Set position if provided, otherwise use offset from original
             if position:
                 scale = 1000000 if position.get("unit", "mm") == "mm" else 25400000
@@ -794,17 +788,15 @@ class ComponentCommands:
                 # Offset by 5mm
                 source_pos = source.GetPosition()
                 new_module.SetPosition(pcbnew.VECTOR2I(source_pos.x + 5000000, source_pos.y))
-                
-            # Set rotation if provided, otherwise use same as original
+
+            # Set rotation if provided, otherwise keep the same as original
             if rotation is not None:
                 rotation_angle = pcbnew.EDA_ANGLE(rotation, pcbnew.DEGREES_T)
                 new_module.SetOrientation(rotation_angle)
-            else:
-                new_module.SetOrientation(source.GetOrientation())
-                
+
             # Add to board
             self.board.Add(new_module)
-            
+
             # Get final position in mm
             pos = new_module.GetPosition()
 

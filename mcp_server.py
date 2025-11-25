@@ -13,9 +13,10 @@ import os
 from typing import Literal, Annotated, Any, Dict
 from pathlib import Path
 
-# Load environment variables
+# Load environment variables from the same directory as this script
 from dotenv import load_dotenv
-load_dotenv()
+script_dir = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(script_dir, '.env'))
 
 # Import FastMCP
 from fastmcp import FastMCP, Context
@@ -44,6 +45,8 @@ logger.info(f"Python version: {sys.version}")
 logger.info(f"Python executable: {sys.executable}")
 logger.info(f"Platform: {sys.platform}")
 logger.info(f"Working directory: {os.getcwd()}")
+logger.info(f"Loaded .env from: {os.path.join(script_dir, '.env')}")
+logger.info(f"MOUSER_API_KEY set: {bool(os.getenv('MOUSER_API_KEY'))}")
 
 # Add python directory to path for imports
 python_dir = os.path.join(os.path.dirname(__file__), 'python')
@@ -252,10 +255,10 @@ def add_board_outline(
 @mcp.tool
 def get_schematic_index(
     project_path: Annotated[str, Field(description="Path to KiCAD project directory")]
-) -> str:
+) -> Dict[str, Any]:
     """Get project-wide schematic index showing all pages and inter-page signals."""
     try:
-        return SchematicDSLManager.get_schematic_index({"project_path": project_path})
+        return SchematicDSLManager.get_schematic_index(project_path)
     except Exception as e:
         logger.error(f"Error getting schematic index: {e}")
         raise ToolError(f"Failed to get schematic index: {str(e)}")
@@ -265,13 +268,10 @@ def get_schematic_index(
 def get_schematic_page(
     project_path: Annotated[str, Field(description="Path to KiCAD project directory")],
     page_name: Annotated[str, Field(description="Name of schematic page (without .kicad_sch)")]
-) -> str:
+) -> Dict[str, Any]:
     """Get detailed DSL representation of a specific schematic page."""
     try:
-        return SchematicDSLManager.get_schematic_page({
-            "project_path": project_path,
-            "page_name": page_name
-        })
+        return SchematicDSLManager.get_schematic_page(project_path, page_name)
     except Exception as e:
         logger.error(f"Error getting schematic page: {e}")
         raise ToolError(f"Failed to get schematic page: {str(e)}")
@@ -282,15 +282,10 @@ def get_schematic_context(
     project_path: Annotated[str, Field(description="Path to KiCAD project directory")],
     component_ref: Annotated[str | None, Field(description="Component designator (e.g., 'R1', 'U3')")] = None,
     net_name: Annotated[str | None, Field(description="Net name to trace")] = None
-) -> str:
+) -> Dict[str, Any]:
     """Get contextual information about a component or net in the schematic."""
     try:
-        params = {"project_path": project_path}
-        if component_ref:
-            params["component_ref"] = component_ref
-        if net_name:
-            params["net_name"] = net_name
-        return SchematicDSLManager.get_schematic_context(params)
+        return SchematicDSLManager.get_schematic_context(project_path, component_ref, net_name)
     except Exception as e:
         logger.error(f"Error getting schematic context: {e}")
         raise ToolError(f"Failed to get schematic context: {str(e)}")
