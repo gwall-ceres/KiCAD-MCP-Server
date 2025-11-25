@@ -149,41 +149,7 @@ BOARD_TOOLS = [
             "required": ["shape"]
         }
     },
-    {
-        "name": "add_layer",
-        "title": "Add Custom Layer",
-        "description": "Adds a new custom layer to the board stack (e.g., User.1, User.Comments).",
-        "inputSchema": {
-            "type": "object",
-            "properties": {
-                "layerName": {
-                    "type": "string",
-                    "description": "Name of the layer to add"
-                },
-                "layerType": {
-                    "type": "string",
-                    "enum": ["signal", "power", "mixed", "jumper"],
-                    "description": "Type of layer (for copper layers)"
-                }
-            },
-            "required": ["layerName"]
-        }
-    },
-    {
-        "name": "set_active_layer",
-        "title": "Set Active Layer",
-        "description": "Sets the currently active layer for drawing operations.",
-        "inputSchema": {
-            "type": "object",
-            "properties": {
-                "layerName": {
-                    "type": "string",
-                    "description": "Name of the layer to make active (e.g., F.Cu, B.Cu, Edge.Cuts)"
-                }
-            },
-            "required": ["layerName"]
-        }
-    },
+    # NOTE: add_layer and set_active_layer removed - they require GUI and don't work headlessly
     {
         "name": "get_layer_list",
         "title": "List Board Layers",

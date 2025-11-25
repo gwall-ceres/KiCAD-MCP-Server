@@ -259,6 +259,7 @@ class MouserClient(BaseDistributorClient):
             response = await self._post(
                 url,
                 headers=self._build_headers(),
+                params=params,
                 json_data=payload,
                 use_cache=True
             )

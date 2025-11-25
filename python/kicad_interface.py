@@ -171,7 +171,6 @@ try:
     from commands.library_schematic import LibraryManager as SchematicLibraryManager
     from commands.library import LibraryManager as FootprintLibraryManager, LibraryCommands
     from commands.schematic_dsl import SchematicDSLManager
-    from commands.distributor_commands import DistributorCommands
     logger.info("Successfully imported all command handlers")
 except ImportError as e:
     logger.error(f"Failed to import command handlers: {e}")
@@ -204,7 +203,6 @@ class KiCADInterface:
         self.design_rule_commands = DesignRuleCommands(self.board)
         self.export_commands = ExportCommands(self.board)
         self.library_commands = LibraryCommands(self.footprint_library)
-        self.distributor_commands = DistributorCommands()
 
         # Schematic-related classes don't need board reference
         # as they operate directly on schematic files
@@ -219,8 +217,7 @@ class KiCADInterface:
             
             # Board commands
             "set_board_size": self.board_commands.set_board_size,
-            "add_layer": self.board_commands.add_layer,
-            "set_active_layer": self.board_commands.set_active_layer,
+            # NOTE: add_layer and set_active_layer removed - they require GUI and don't work headlessly
             "get_board_info": self.board_commands.get_board_info,
             "get_layer_list": self.board_commands.get_layer_list,
             "get_board_2d_view": self.board_commands.get_board_2d_view,
@@ -282,15 +279,6 @@ class KiCADInterface:
             "get_schematic_index": self._handle_get_schematic_index,
             "get_schematic_page": self._handle_get_schematic_page,
             "get_schematic_context": self._handle_get_schematic_context,
-
-            # Distributor API commands
-            "find_automotive_alternative": self.distributor_commands.find_automotive_alternative,
-            "search_component": self.distributor_commands.search_component,
-            "get_availability": self.distributor_commands.get_availability,
-            "check_bom_compliance": self.distributor_commands.check_bom_compliance,
-            "find_bom_alternatives": self.distributor_commands.find_bom_alternatives,
-            "compare_availability": self.distributor_commands.compare_availability,
-            "generate_substitution_report": self.distributor_commands.generate_substitution_report,
 
             # UI/Process management commands
             "check_kicad_ui": self._handle_check_kicad_ui,

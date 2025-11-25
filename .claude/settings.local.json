@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch:*)",
+      "Bash(git merge fastmcp-pure-python -m \"$(cat <<''EOF''\nMerge FastMCP pure Python implementation\n\nReplaces Node.js/TypeScript MCP server with pure Python FastMCP implementation.\n- Single Python process using FastMCP library\n- 50+ tools for KiCAD PCB design automation\n- Distributor integration (Mouser, DigiKey, Octopart)\n- Schematic DSL tools for cross-sheet analysis\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(git rm:*)",
+      "Bash(git ls-tree:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
